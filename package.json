@@ -1,0 +1,17 @@
+{
+  "name": "apiusermanagement",
+  "version": "1.0.0",
+  "description": "api de gestions des utilisateurs",
+  "main": "app.js",
+  "scripts": {
+    "test": "/"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "FILLEUX Dimitri",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.3"
+  }
+}
