@@ -7,7 +7,206 @@
     },
     "servers": [
         {
-            "url": "https://server/api/"
+            "url": "https://server/api/users"
+        },
+        {
+            "url": "https://server/web"
         }
-    ]
+    ],
+    "tags":[
+        {
+            "name": "Utilisateurs",
+            "description": "Informations sur chaque route API du microservice de gestion des utilisateurs."
+        }
+    ],
+    "paths": {
+        "/create-user": {
+            "post": {
+              "tags": ["Utilisateurs"],
+              "summary": "Créez un nouvel utilisateur pour accéder à l'application Onzecord.",
+              "operationId": "CreateUser",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["password", "email"]
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Renvoie un message 'SUCCESS' si l'utilisateur est bien créé."
+                },
+                "400": {
+                  "description": "Renvoie un message 'ERROR' si des données obligatoires sont manquantes."
+                },
+                "404": {
+                  "description": "Renvoie un message 'ERROR' si la création rencontre un problème."
+                }
+              }
+            }
+          },
+          "/signin": {
+            "post": {
+              "tags": ["Utilisateurs"],
+              "summary": "Connecter l'utilisateur.",
+              "operationId": "SigninUser",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["password", "email"]
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Renvoie un message 'SUCCESS' si l'utilisateur est bien authentifier."
+                },
+                "400": {
+                  "description": "Renvoie un message 'ERROR' si des données obligatoires sont manquantes."
+                },
+                "404": {
+                  "description": "Renvoie un message 'ERROR' si la création rencontre un problème."
+                }
+              }
+            }
+          },
+          "/update-user": {
+            "post": {
+              "tags": ["Utilisateurs"],
+              "summary": "Modifier les informations de l'utilisateur.",
+              "operationId": "UpdateUser",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                            "type": "string"
+                          },
+                        "pseudo": {
+                          "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                          },
+                        "email": {
+                          "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                          }
+                      },
+                      "required": ["id", "email"]
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Renvoie un message 'SUCCESS' si les modifications ont bien été prises en compte."
+                },
+                "400": {
+                  "description": "Renvoie un message 'ERROR' si des données obligatoires sont manquantes."
+                },
+                "404": {
+                  "description": "Renvoie un message 'ERROR' si la création rencontre un problème."
+                }
+              }
+            }
+          },
+          "/delete-user": {
+            "post": {
+              "tags": ["Utilisateurs"],
+              "summary": "supprime l'utilisateur.",
+              "operationId": "DeleteUser",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                            "type": "string"
+                          }
+                      },
+                      "required": ["id"]
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Renvoie un message 'SUCCESS' si l'utilisateur a bien été supprimé."
+                },
+                "400": {
+                  "description": "Renvoie un message 'ERROR' si des données obligatoires sont manquantes."
+                },
+                "404": {
+                  "description": "Renvoie un message 'ERROR' si la création rencontre un problème."
+                }
+              }
+            }
+          },
+          "/information-user": {
+            "post": {
+              "tags": ["Utilisateurs"],
+              "summary": "Obtenir les informations de l'utilisateur.",
+              "operationId": "InformationUser",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                            "type": "string"
+                          }
+                      },
+                      "required": ["id"]
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Renvoie un JSON avec les informations de l'utilisateur."
+                },
+                "400": {
+                  "description": "Renvoie un message 'ERROR' si des données obligatoires sont manquantes."
+                },
+                "404": {
+                  "description": "Renvoie un message 'ERROR' si la création rencontre un problème."
+                }
+              }
+            }
+          }
+    }
 }

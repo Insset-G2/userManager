@@ -3,10 +3,10 @@ const express = require('express');
 const api = express.Router();
 
 // POST pour ajouter un utilisateur
-api.post('/add-user', (req, res) => {
+api.post('/api/users/create-user', (req, res) => {
     const formData = req.body;
 
-     if (!formData.name || !formData.email) {
+     if (!formData.password || !formData.email) {
         return res.status(400).json({ error: 'ERROR' });
     }
     // Faire quelque chose avec les données du formulaire
@@ -14,11 +14,24 @@ api.post('/add-user', (req, res) => {
     res.json({ message: 'SUCCESS' });
 });
 
-// POST pour modifier un utilisateur
-api.post('/update-user', (req, res) =>{
+// POST pour connecter l'utilisateur
+api.post('/api/users/signin', (req, res) => {
     const formData = req.body;
 
-    if (!formData.name || !formData.email) {
+     if (!formData.password || !formData.email) {
+        return res.status(400).json({ error: 'ERROR' });
+    }
+    // Faire quelque chose avec les données du formulaire
+    console.log(formData);
+    res.json({ message: 'SUCCESS' });
+});
+
+
+// POST pour modifier un utilisateur
+api.post('/api/users/update-user', (req, res) =>{
+    const formData = req.body;
+
+    if (!formData.email) {
         return res.status(400).json({ error: 'ERROR' });
     }
     // Faire quelque chose avec les données du formulaire
@@ -27,7 +40,14 @@ api.post('/update-user', (req, res) =>{
 });
 
 // POST pour supprimer un utilisateur
-api.post('/delete-user', (req, res) => {
+api.post('/api/users/delete-user', (req, res) => {
+    const formData = req.body;
+    // Faire quelque chose avec les données du formulaire
+    console.log(formData);
+    res.json({ message: 'SUCCESS' });
+});
+
+api.post('/api/users/count-user', (req, res) => {
     const formData = req.body;
 
     if (!formData.name || !formData.email) {
@@ -38,23 +58,8 @@ api.post('/delete-user', (req, res) => {
     res.json({ message: 'SUCCESS' });
 });
 
-api.post('/count-user', (req, res) => {
+api.post('/api/users/user-info', (req, res) => {
     const formData = req.body;
-
-    if (!formData.name || !formData.email) {
-        return res.status(400).json({ error: 'ERROR' });
-    }
-    // Faire quelque chose avec les données du formulaire
-    console.log(formData);
-    res.json({ message: 'SUCCESS' });
-});
-
-api.post('/user-info', (req, res) => {
-    const formData = req.body;
-
-    if (!formData.name || !formData.email) {
-        return res.status(400).json({ error: 'ERROR' });
-    }
     // Faire quelque chose avec les données du formulaire
     console.log(formData);
     res.json({ message: 'SUCCESS' });
