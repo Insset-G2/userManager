@@ -9,5 +9,9 @@ web.get('/', (req, res) => {
       res.render('index.html', { data: data });
   });
 
+ web.get('/api-information', (req, res) => {
+    res.render('swagger.html');
+});
+
   // Exporter le routeur
 module.exports = web;

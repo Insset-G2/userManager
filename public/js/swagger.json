@@ -1,0 +1,13 @@
+{
+    "openapi": "3.1.2",
+    "info": {
+        "description": "API des gestions des utilisateurs Onzecord",
+        "version": "1.0.0",
+        "title": "API utilisateur"
+    },
+    "servers": [
+        {
+            "url": "https://server/api/"
+        }
+    ]
+}
