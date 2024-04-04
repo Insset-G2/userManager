@@ -13,7 +13,15 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
-    "express": "^4.18.3",
+    "express": "^4.19.2",
     "nunjucks": "^3.2.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Insset-G2/userManager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Insset-G2/userManager/issues"
+  },
+  "homepage": "https://github.com/Insset-G2/userManager#readme"
 }

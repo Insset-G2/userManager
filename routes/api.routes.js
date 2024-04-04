@@ -5,12 +5,10 @@ const api = express.Router();
 // POST pour ajouter un utilisateur
 api.post('/api/users/create-user', (req, res) => {
     const formData = req.body;
-
      if (!formData.password || !formData.email) {
         return res.status(400).json({ error: 'ERROR' });
     }
     // Faire quelque chose avec les données du formulaire
-    console.log(formData);
     res.json({ message: 'SUCCESS' });
 });
 

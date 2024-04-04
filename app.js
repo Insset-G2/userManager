@@ -13,6 +13,7 @@ const web = require('./routes/web.routes');
 
 // Utiliser body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Servir les fichiers statiques depuis le dossier public
 app.use(express.static(path.join(__dirname, 'public')));
@@ -30,7 +31,7 @@ nunjucks.configure('views', {
 app.use(api);
 app.use(web);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
 // Créer un serveur HTTP
 const server = http.createServer(app);
