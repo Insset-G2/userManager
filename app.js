@@ -10,6 +10,8 @@ const app = express();
 // Importer les fichiers de routes
 const api = require('./routes/api.routes');
 const web = require('./routes/web.routes');
+const database = require('./routes/database.routes');
+const onzecord = require('./routes/onzecord.routes');
 
 // Utiliser body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,6 +32,8 @@ nunjucks.configure('views', {
 // Utiliser le routeur
 app.use(api);
 app.use(web);
+app.use(database);
+app.use(onzecord);
 
 const port = process.env.PORT || 80;
 

@@ -7,10 +7,10 @@
     },
     "servers": [
         {
-            "url": "https://server/api/users"
+            "url": "https://SERVER/api/users"
         },
         {
-            "url": "https://server/web"
+            "url": "https://SERVER/web"
         }
     ],
     "tags":[
@@ -89,7 +89,7 @@
                   "description": "Renvoie un message 'ERROR' si des données obligatoires sont manquantes."
                 },
                 "404": {
-                  "description": "Renvoie un message 'ERROR' si la création rencontre un problème."
+                  "description": "Renvoie un message 'ERROR' si la connexions rencontre un problème."
                 }
               }
             }
@@ -135,7 +135,7 @@
                   "description": "Renvoie un message 'ERROR' si des données obligatoires sont manquantes."
                 },
                 "404": {
-                  "description": "Renvoie un message 'ERROR' si la création rencontre un problème."
+                  "description": "Renvoie un message 'ERROR' si la modification à rencontre un problème."
                 }
               }
             }
@@ -169,7 +169,7 @@
                   "description": "Renvoie un message 'ERROR' si des données obligatoires sont manquantes."
                 },
                 "404": {
-                  "description": "Renvoie un message 'ERROR' si la création rencontre un problème."
+                  "description": "Renvoie un message 'ERROR' si la suppression a rencontre un problème."
                 }
               }
             }
@@ -203,10 +203,25 @@
                   "description": "Renvoie un message 'ERROR' si des données obligatoires sont manquantes."
                 },
                 "404": {
-                  "description": "Renvoie un message 'ERROR' si la création rencontre un problème."
+                  "description": "Renvoie un message 'ERROR' s'il y a un problème."
                 }
               }
             }
-          }
+          },
+          "/count-user": {
+            "get": {
+              "tags": ["Utilisateurs"],
+              "summary": "Obtenir le nombre d'utilisateurs",
+              "operationId": "CountUser"
+              },
+              "responses": {
+                "200": {
+                  "description": "Renvoie un nombre d'utilisateur."
+                },
+                "404": {
+                  "description": "Renvoie un message 'ERROR' s'il y a un problème."
+                }
+              }
+            }
     }
-}
+  }

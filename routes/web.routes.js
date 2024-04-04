@@ -13,5 +13,9 @@ web.get('/', (req, res) => {
     res.render('swagger.html');
 });
 
+web.post('/find-user', (req, res) =>{
+  
+});
+
   // Exporter le routeur
 module.exports = web;
