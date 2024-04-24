@@ -4,6 +4,8 @@ const https = require('https');
 const http = require('http');
 const crypto = require('crypto');
 const fs = require('fs');
+const csrf = require('csurf');
+const { Console } = require('console');
 const api = express.Router();
 
 const APIDatabaseIP = "34.155.213.60";
@@ -13,6 +15,8 @@ api.post('/api/users/create-user', async (req, res) => {
 try {
         const formData = req.body;
 
+        if (formData._csrf === req.session.csrfSecret) {
+            
         if (!formData.password || !formData.email) {
             return res.status(400).json({ message: 'ERROR' });
         }
@@ -63,6 +67,7 @@ try {
         const sendToEmail = await postDataHttps(optionsEmail, postEmail);
 
         res.json({ message: 'SUCCESS' });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -72,13 +77,15 @@ try {
 // POST pour connecter l'utilisateur
 api.post('/api/users/signin', (req, res) => {
     const formData = req.body;
+    if (formData._csrf === req.session.csrfSecret) {
 
-     if (!formData.password || !formData.email) {
-        return res.status(400).json({ error: 'ERROR' });
+        if (!formData.password || !formData.email) {
+            return res.status(400).json({ error: 'ERROR' });
+        }
+        // Faire quelque chose avec les données du formulaire
+        console.log(formData);
+        res.json({ message: 'SUCCESS' });
     }
-    // Faire quelque chose avec les données du formulaire
-    console.log(formData);
-    res.json({ message: 'SUCCESS' });
 });
 
 

@@ -1,8 +1,12 @@
 // Importer Express
 const express = require('express');
+const session = require('express-session');
+const csrf = require('csurf');
 const http = require('http');
+const crypto = require('crypto');
 const nunjucks = require('nunjucks');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 
 const app = express();
@@ -13,9 +17,18 @@ const web = require('./routes/web.routes');
 const database = require('./routes/database.routes');
 const onzecord = require('./routes/onzecord.routes');
 
+// Middlewares
+app.use(cookieParser());
 // Utiliser body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(csrf({ cookie: true }));
+
+app.use(session({
+  secret: crypto.randomBytes(64).toString('hex'),
+  resave: false,
+  saveUninitialized: true
+}));
 
 // Servir les fichiers statiques depuis le dossier public
 app.use(express.static(path.join(__dirname, 'public')));
