@@ -83,7 +83,7 @@ api.post('/api/users/signin', (req, res) => {
             return res.status(400).json({ error: 'ERROR' });
         }
         // Faire quelque chose avec les données du formulaire
-        console.log(formData);
+        //console.log(formData);
         res.json({ message: 'SUCCESS' });
     }
 });
