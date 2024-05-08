@@ -19,4 +19,4 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy to server
-        run: ssh root@93.6.196.46 -p 62543 'bash -s' < deploy.sh
+        run: ssh root@93.6.196.46 -p 62543 'bash -s' < ./deploy.sh
