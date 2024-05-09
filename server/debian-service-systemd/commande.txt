@@ -1,0 +1,13 @@
+sudo nano /etc/systemd/system/mon_programme.service
+
+sudo systemctl daemon-reload
+
+sudo systemctl start mon_programme
+
+sudo systemctl stop mon_programme
+
+sudo systemctl enable mon_programme
+
+sudo systemctl disable mon_programme
+
+sudo systemctl status mon_programme

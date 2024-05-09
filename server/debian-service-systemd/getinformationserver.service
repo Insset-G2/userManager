@@ -1,0 +1,14 @@
+[Unit]
+Description=Service pour envoyer les informations du serveur
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/pi/service/
+ExecStart=/home/pi/service/service_getinfoserver
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target

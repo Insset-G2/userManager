@@ -1,0 +1,14 @@
+[Unit]
+Description=Service pour envoyer l'adresse IP publique
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/pi/service/
+ExecStart=/home/pi/service/service_getippublic
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
