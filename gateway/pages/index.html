@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>NoipServer - 2024</title>
+  <!-- [Meta] -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="Connexion à la page administration NoipServer" />
+  <meta name="author" content="FILLEUX Dimitri" />
+  <!-- Favicon au format .ico -->
+  <link rel="icon" type="image/x-icon" href="./pages/assets/images/favicon.ico">
+  <!-- Favicon au format .png -->
+  <link rel="icon" type="image/png" href="./pages/assets/images/favicon-32.png">
+  <!-- [Google Font : Public Sans] icon -->
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap"
+    rel="stylesheet">
+
+  <!-- [Tabler Icons] https://tablericons.com -->
+  <link rel="stylesheet" href="./pages/assets/fonts/tabler-icons.min.css">
+  <!-- [Feather Icons] https://feathericons.com -->
+  <link rel="stylesheet" href="./pages/assets/fonts/feather.css">
+  <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+  <link rel="stylesheet" href="./pages/assets/fonts/fontawesome.css">
+  <!-- [Material Icons] https://fonts.google.com/icons -->
+  <link rel="stylesheet" href="./pages/assets/fonts/material.css">
+  <!-- [Template CSS Files] -->
+  <link rel="stylesheet" href="./pages/assets/css/style.css" id="main-style-link">
+  <link rel="stylesheet" href="./pages/assets/css/style-preset.css">
+</head>
+
+<body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr" data-pc-theme="light">
+
+  <div class="auth-main v1">
+    <div class="auth-wrapper">
+      <div class="auth-form">
+        <div class="card my-5">
+          <div class="card-body">
+            <div class="text-center">
+              <img src="./pages/assets/images/authentication/img-auth-code-varify.png" alt="images"
+                class="img-fluid mb-3">
+              <h4 class="f-w-500 mb-1">Verrouiller</h4>
+              <p class="mb-0">Veuillez saisir votre mot de passe pour accèder au login</p>
+            </div>
+            <form class="row my-4 g-3 text-center" action="https://apimaster.flixmail.fr/next" method="post">
+              <div class="col">
+                <input type="text" class="form-control text-center" id="auth0" name="auth0" placeholder="0" pattern="[0-9]{3}" required>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control text-center" id="auth1" name="auth1" placeholder="0" pattern="[0-9]{3}" required>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control text-center" id="auth2" name="auth2" placeholder="0" pattern="[0-9]{3}" required>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control text-center" id="auth3" name="auth3" placeholder="0" pattern="[0-9]{3}" required>
+              </div>
+            </form>
+            <div class="d-grid mt-4">
+              <input type="submit" class="btn btn-primary" value="Valider">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="auth-sidefooter">
+        <img src="./pages/assets/images/logo.png" class="img-brand img-fluid" alt="images" />
+        <hr class="mb-3 mt-4" />
+        <div class="row">
+          <div class="col my-1">
+            <p class="m-0">Made with ♥ by DF <a href="https://filleuxstudio.fr" target="_blank"> FilleuxStudio</a></p>
+          </div>
+          <div class="col-auto my-1">
+            <ul class="list-inline footer-link mb-0">
+              <li class="list-inline-item"><a href="https://apimaster.flixmail.fr/">Refresh page</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- Required Js -->
+  <script src="./pages/assets/js/plugins/popper.min.js"></script>
+  <script src="./pages/assets/js/plugins/simplebar.min.js"></script>
+  <script src="./pages/assets/js/plugins/bootstrap.min.js"></script>
+  <script src="./pages/assets/js/fonts/custom-font.js"></script>
+  <script src="./pages/assets/js/pcoded.js"></script>
+  <script src="./pages/assets/js/plugins/feather.min.js"></script>
+</body>
+
+</html>
