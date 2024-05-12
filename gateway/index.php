@@ -23,6 +23,7 @@ function handleRequest($method, $path)
                    // include('./pages/index.html');
                    // break;
                    requestApiService('/');
+                   break;
                 case '/logout':
                     logout();
                     break;
