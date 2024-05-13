@@ -13,10 +13,20 @@ function requestApiService($uri)
     // Vérifier la méthode de la requête
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method === 'GET') {
-        header("Location: http://" . $targetUrl);
+        header("Location: https://" . $targetUrl);
         exit();
     } else {
-        header("Location: http://" . $targetUrl);
-        exit();
+
+        var_dump($uri);
+        var_dump($method);
+        var_dump($_POST);
+        
+        // Récupération des données POST
+        $post_data = $_POST;
+        // Construction de la nouvelle URL avec les données POST
+        $targetUrl .= '?' . http_build_query($post_data);
+        // Redirection vers la nouvelle URL
+        header('Location:  https://"' . $targetUrl);
+        exit;
     }
 }

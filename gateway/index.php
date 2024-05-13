@@ -20,10 +20,10 @@ function handleRequest($method, $path)
                     dashboardInformation();
                     break;
                 case '/':
-                   // include('./pages/index.html');
-                   // break;
-                   requestApiService('/');
-                   break;
+                    // include('./pages/index.html');
+                    // break;
+                    requestApiService('/');
+                    break;
                 case '/logout':
                     logout();
                     break;
@@ -48,9 +48,16 @@ function handleRequest($method, $path)
                 case '/infoip':
                     dashboardIpManager();
                     break;
-                    case '/next':
-                        nextLogin();
-                        break;
+                case '/next':
+                    nextLogin();
+                    break;
+                case '/api':
+                    requestApiService('/api');
+                    break;
+                case '/api/users/':
+                    requestApiService('/api/users/');
+                    break;
+
                 default:
                     // Route non trouvée, afficher une erreur 404
                     http_response_code(404);
