@@ -4,12 +4,19 @@ const session = require('express-session');
 const csrf = require('csurf');
 const http = require('http');
 const crypto = require('crypto');
+const https = require('https');
+const fs = require('fs');
 const nunjucks = require('nunjucks');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 
 const app = express();
+
+const options = {
+  key: fs.readFileSync(path.resolve('./key.pem')),
+  cert: fs.readFileSync(path.resolve('./cert.pem'))
+};
 
 // Importer les fichiers de routes
 const api = require('./routes/api.routes');
@@ -51,7 +58,7 @@ app.use(onzecord);
 const port = process.env.PORT || 62580;
 
 // Créer un serveur HTTP
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 // Démarrer le serveur sur le port spécifié
 server.listen(port, () => {
