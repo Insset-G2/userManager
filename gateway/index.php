@@ -54,10 +54,12 @@ function handleRequest($method, $path)
                 case '/api':
                     requestApiService('/api');
                     break;
-                case '/api/users/':
-                    requestApiService('/api/users/');
+                case '/api/users':
+                    requestApiService('/api/users');
                     break;
-
+                case '/api/users/create-user':
+                    requestApiService('/api/users/create-user');
+                    break;
                 default:
                     // Route non trouvée, afficher une erreur 404
                     http_response_code(404);

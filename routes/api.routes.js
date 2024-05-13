@@ -8,7 +8,7 @@ const csrf = require('csurf');
 const { Console } = require('console');
 const api = express.Router();
 
-const APIDatabaseIP = "34.155.208.8";
+const APIDatabaseIP = "http://projetccm.warfild.tech/";
 
 // POST pour ajouter un utilisateur
 api.post('/api/users/create-user', async (req, res) => {

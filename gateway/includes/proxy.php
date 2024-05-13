@@ -17,16 +17,14 @@ function requestApiService($uri)
         exit();
     } else {
 
-        var_dump($uri);
-        var_dump($method);
-        var_dump($_POST);
-        
         // Récupération des données POST
-        $post_data = $_POST;
-        // Construction de la nouvelle URL avec les données POST
-        $targetUrl .= '?' . http_build_query($post_data);
-        // Redirection vers la nouvelle URL
-        header('Location:  https://"' . $targetUrl);
+        $post_data = http_build_query($_POST);
+        
+        // Redirection vers la nouvelle URL avec les données POST
+        header('Location: https://' . $targetUrl, true, 307);
+        header('Content-Length: ' . strlen($post_data));
+        header('Content-Type: application/x-www-form-urlencoded');
+        echo $post_data;
         exit;
     }
 }
