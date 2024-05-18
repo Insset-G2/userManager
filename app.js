@@ -13,10 +13,10 @@ const path = require('path');
 
 const app = express();
 
-const options = {
+/*const options = {
   key: fs.readFileSync(path.resolve('./key.pem')),
   cert: fs.readFileSync(path.resolve('./cert.pem'))
-};
+};*/
 
 // Importer les fichiers de routes
 const api = require('./routes/api.routes');
@@ -58,8 +58,8 @@ app.use(onzecord);
 const port = process.env.PORT || 62580;
 
 // Créer un serveur HTTPS
-// const server = http.createServer(app);
-const server = https.createServer(options, app);
+const server = http.createServer(app);
+//const server = https.createServer(options, app);
 
 // Démarrer le serveur sur le port spécifié
 server.listen(port, () => {
