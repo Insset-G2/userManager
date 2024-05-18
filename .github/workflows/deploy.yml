@@ -33,3 +33,5 @@ jobs:
         gcloud run deploy usermanager-service \
           --image us.gcr.io/ ${{ secrets.GCLOUD_PROJECT_ID }}/usermanager-service \
           --region=us-central1
+          --platform managed \
+          --allow-unauthenticated
