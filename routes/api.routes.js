@@ -8,7 +8,7 @@ const csrf = require('csurf');
 const { Console } = require('console');
 const api = express.Router();
 
-const APIDatabaseIP = "http://projetccm.warfild.tech/";
+const APIDatabaseIP = "https://my-api-platform-r7v4dtv3ya-od.a.run.app";
 
 // POST pour ajouter un utilisateur
 api.post('/api/users/create-user', async (req, res) => {
@@ -56,7 +56,6 @@ try {
             'method': 'POST',
             'hostname': APIDatabaseIP,
             'path': '/users',
-            'port': 80,
             headers: {
                 'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(postDb)
@@ -66,7 +65,7 @@ try {
         const sendToDbUser = await postDataHttp(optionsDb, postDb);
         const sendToEmail = await postDataHttps(optionsEmail, postEmail);
 
-        res.json({ message: 'SUCCESS' });
+        res.json({ message: 'SUCCESS', email: formData.email });
         }
     } catch (error) {
         console.error(error);
@@ -75,16 +74,22 @@ try {
 });
 
 // POST pour connecter l'utilisateur
-api.post('/api/users/signin', (req, res) => {
+api.post('/api/users/signin',async (req, res) => {
     const formData = req.body;
     if (formData._csrf === req.session.csrfSecret) {
 
         if (!formData.password || !formData.email) {
             return res.status(400).json({ error: 'ERROR' });
+        }else{
+              var options = {
+                'method': 'GET',
+                'url': APIDatabaseIP + '?users=' + formData.email,
+              };
+              request(options, function (error, response) {
+                if (error) throw new Error(error);
+                res.json({ message: 'SUCCESS', data: response.body });
+              });
         }
-        // Faire quelque chose avec les données du formulaire
-        //console.log(formData);
-        res.json({ message: 'SUCCESS' });
     }
 });
 
@@ -95,6 +100,8 @@ api.post('/api/users/update-user', (req, res) =>{
 
     if (!formData.email) {
         return res.status(400).json({ error: 'ERROR' });
+    }else{
+
     }
     // Faire quelque chose avec les données du formulaire
     console.log(formData);
@@ -104,9 +111,14 @@ api.post('/api/users/update-user', (req, res) =>{
 // POST pour supprimer un utilisateur
 api.post('/api/users/delete-user', (req, res) => {
     const formData = req.body;
-    // Faire quelque chose avec les données du formulaire
-    console.log(formData);
-    res.json({ message: 'SUCCESS' });
+    var options = {
+        'method': 'DELETE',
+        'url': APIDatabaseIP + '?users=' + formData.id,
+      };
+      request(options, function (error, response) {
+        if (error) throw new Error(error);
+        res.json({ message: 'SUCCESS', responses: response.body });
+      });
 });
 
 api.get('/api/users/count-user', (req, res) => {
@@ -115,16 +127,28 @@ api.get('/api/users/count-user', (req, res) => {
     if (!formData.name || !formData.email) {
         return res.status(400).json({ error: 'ERROR' });
     }
-    // Faire quelque chose avec les données du formulaire
-    console.log(formData);
-    res.json({ message: 'SUCCESS' });
+   
+    var options = {
+        'method': 'GET',
+        'url': APIDatabaseIP + 'users',
+      };
+      request(options, function (error, response) {
+        if (error) throw new Error(error);
+        res.json({ message: 'SUCCESS', responses: response.body });
+      });
 });
 
 api.post('/api/users/information-user', (req, res) => {
     const formData = req.body;
-    // Faire quelque chose avec les données du formulaire
-    console.log(formData);
-    res.json({ message: 'SUCCESS' });
+   
+    var options = {
+        'method': 'GET',
+        'url': APIDatabaseIP + '?users=' + formData.id,
+      };
+      request(options, function (error, response) {
+        if (error) throw new Error(error);
+        res.json({ message: 'SUCCESS', data: response.body });
+      });
 });
 
 function postDataHttps(options, postData) {
