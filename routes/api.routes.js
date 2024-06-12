@@ -13,60 +13,59 @@ const APIEmail = "https://onzecord-mail-ynl52tk6za-ey.a.run.app";
 
 // POST pour ajouter un utilisateur
 api.post('/api/users/create-user', async (req, res) => {
-try {
+    try {
         const formData = req.body;
 
         if (formData._csrf === req.session.csrfSecret) {
-            
-        if (!formData.password || !formData.email) {
-            return res.status(400).json({ message: 'ERROR' });
-        }
-        
-        var hashPassword = crypto.createHash('sha256').update(formData.password).digest('hex');
-        var currentDate = new Date(Date.now());
-        var formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}T${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
-
-        const postDb = JSON.stringify({
-            "last_name": formData.email.match(/^([^@]*)@/)[1],
-            "first_name": formData.email.match(/^([^@]*)@/)[1],
-            "email": formData.email,
-            "password": hashPassword,
-            "avatar": "neutral",
-            "description": "null",
-            "created_at": formattedDate,
-            "status": 1,
-          });
-
-        const postEmail = JSON.stringify({
-            "to": formData.email,
-            "subject": "Confirmation de création de compte sur OnzeCord",
-            "message": "Nous sommes ravis de vous informer que votre compte OnzeCord a été créé avec succès. Vous pouvez désormais profiter de tous les avantages offerts par notre plateforme."
-        });
-
-        const optionsEmail = {
-            hostname: APIEmail,
-            path: '/send_email',
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(postEmail)
+            if (!formData.password || !formData.email) {
+                return res.status(400).json({ message: 'Veuillez fournir un email et un mot de passe.' });
             }
-        };
 
-        const optionsDb = {
-            'method': 'POST',
-            'hostname': APIDatabaseIP,
-            'path': '/users',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(postDb)
-            }
-          };
+            const hashPassword = crypto.createHash('sha256').update(formData.password).digest('hex');
+            const currentDate = new Date(Date.now());
+            const formattedDate = `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1).toString().padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}T${currentDate.getHours().toString().padStart(2, '0')}:${currentDate.getMinutes().toString().padStart(2, '0')}:${currentDate.getSeconds().toString().padStart(2, '0')}`;
 
-        const sendToDbUser = await postDataHttp(optionsDb, postDb);
-        const sendToEmail = await postDataHttps(optionsEmail, postEmail);
+            const postDb = JSON.stringify({
+                "last_name": formData.email.match(/^([^@]*)@/)[1],
+                "first_name": formData.email.match(/^([^@]*)@/)[1],
+                "email": formData.email,
+                "password": hashPassword,
+                "avatar": "neutral",
+                "description": "null",
+                "created_at": formattedDate,
+                "status": 1,
+            });
 
-        res.json({ message: 'SUCCESS', email: formData.email });
+            const postEmail = JSON.stringify({
+                "to": formData.email,
+                "subject": "Confirmation de création de compte sur OnzeCord",
+                "message": "Nous sommes ravis de vous informer que votre compte OnzeCord a été créé avec succès. Vous pouvez désormais profiter de tous les avantages offerts par notre plateforme."
+            });
+
+            const optionsEmail = {
+                hostname: APIEmail.replace(/^https?:\/\//, ''),
+                path: '/send_email',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Content-Length': Buffer.byteLength(postEmail)
+                }
+            };
+
+            const optionsDb = {
+                'method': 'POST',
+                'hostname': APIDatabaseIP.replace(/^https?:\/\//, ''),
+                'path': '/users',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Content-Length': Buffer.byteLength(postDb)
+                }
+            };
+
+            const sendToDbUser = await postDataHttp(optionsDb, postDb);
+            const sendToEmail = await postDataHttps(optionsEmail, postEmail);
+
+            res.json({ message: 'SUCCESS', email: formData.email });
         }
     } catch (error) {
         console.error(error);
@@ -162,7 +161,6 @@ api.post('/api/users/information-user', async (req, res) => {
     }
 })
 
-
 function postDataHttps(options, postData) {
     return new Promise((resolve, reject) => {
         const req = https.request(options, (res) => {
@@ -186,28 +184,25 @@ function postDataHttps(options, postData) {
 
 function postDataHttp(options, postData) {
     return new Promise((resolve, reject) => {
-        var req = http.request(options, function (res) {
-            var chunks = [];
-          
-            res.on("data", function (chunk) {
-              chunks.push(chunk);
+        const req = http.request(options, (res) => {
+            let body = '';
+            res.on('data', (chunk) => {
+                body += chunk;
             });
-          
-            res.on("end", function (chunk) {
-              var body = Buffer.concat(chunks);
-              resolve(body.toString());
+            res.on('end', () => {
+                resolve(body);
             });
-          
-            res.on("error", function (error) {
-              console.error(error);
-              reject(error);
-            });
-          });
-                
-          req.write(postData);
-          req.end();
+        });
+
+        req.on('error', (error) => {
+            reject(error);
+        });
+
+        req.write(postData);
+        req.end();
     });
 }
+
 
 // Exporter le routeur
 module.exports = api;
