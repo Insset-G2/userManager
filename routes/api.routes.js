@@ -9,6 +9,7 @@ const { Console } = require('console');
 const api = express.Router();
 
 const APIDatabaseIP = "https://my-api-platform-r7v4dtv3ya-od.a.run.app";
+const APIEmail = "https://onzecord-mail-ynl52tk6za-ey.a.run.app";
 
 // POST pour ajouter un utilisateur
 api.post('/api/users/create-user', async (req, res) => {
@@ -43,7 +44,7 @@ try {
         });
 
         const optionsEmail = {
-            hostname: 'onzecord-mail-ynl52tk6za-ey.a.run.app',
+            hostname: APIEmail,
             path: '/send_email',
             method: 'POST',
             headers: {
@@ -74,82 +75,93 @@ try {
 });
 
 // POST pour connecter l'utilisateur
-api.post('/api/users/signin',async (req, res) => {
+api.post('/api/users/signin', async (req, res) => {
     const formData = req.body;
     if (formData._csrf === req.session.csrfSecret) {
 
         if (!formData.password || !formData.email) {
-            return res.status(400).json({ error: 'ERROR' });
-        }else{
-              var options = {
-                'method': 'GET',
-                'url': APIDatabaseIP + '?users=' + formData.email,
-              };
-              request(options, function (error, response) {
-                if (error) throw new Error(error);
+            return res.status(400).json({ error: 'Veuillez fournir un email et un mot de passe.' });
+        } else {
+            try {
+                const options = {
+                    'method': 'GET',
+                    'url': `${APIDatabaseIP}?users=${formData.email}`,
+                };
+                const response = await request(options);
                 res.json({ message: 'SUCCESS', data: response.body });
-              });
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: 'Une erreur est survenue lors de la récupération des données.' });
+            }
         }
     }
 });
 
-
 // POST pour modifier un utilisateur
-api.post('/api/users/update-user', (req, res) =>{
+api.post('/api/users/update-user', async (req, res) => {
     const formData = req.body;
 
     if (!formData.email) {
-        return res.status(400).json({ error: 'ERROR' });
-    }else{
-
+        return res.status(400).json({ error: 'Veuillez fournir un email.' });
     }
-    // Faire quelque chose avec les données du formulaire
-    console.log(formData);
-    res.json({ message: 'SUCCESS' });
+
+    try {
+
+
+        res.json({ message: 'SUCCESS' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Une erreur est survenue lors de la mise à jour de l\'utilisateur.' });
+    }
 });
 
 // POST pour supprimer un utilisateur
-api.post('/api/users/delete-user', (req, res) => {
+api.post('/api/users/delete-user', async (req, res) => {
     const formData = req.body;
-    var options = {
-        'method': 'DELETE',
-        'url': APIDatabaseIP + '?users=' + formData.id,
-      };
-      request(options, function (error, response) {
-        if (error) throw new Error(error);
+
+    try {
+        const options = {
+            'method': 'DELETE',
+            'url': `${APIDatabaseIP}?users=${formData.id}`,
+        };
+        const response = await request(options);
         res.json({ message: 'SUCCESS', responses: response.body });
-      });
-});
-
-api.get('/api/users/count-user', (req, res) => {
-    const formData = req.body;
-
-    if (!formData.name || !formData.email) {
-        return res.status(400).json({ error: 'ERROR' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Une erreur est survenue lors de la suppression de l\'utilisateur.' });
     }
-   
-    var options = {
-        'method': 'GET',
-        'url': APIDatabaseIP + 'users',
-      };
-      request(options, function (error, response) {
-        if (error) throw new Error(error);
-        res.json({ message: 'SUCCESS', responses: response.body });
-      });
 });
 
-api.post('/api/users/information-user', (req, res) => {
-    const formData = req.body;
-   
-    var options = {
-        'method': 'GET',
-        'url': APIDatabaseIP + '?users=' + formData.id,
-      };
-      request(options, function (error, response) {
-        if (error) throw new Error(error);
-        res.json({ message: 'SUCCESS', data: response.body });
-      });
+api.get('/api/users/count-user', async (req, res) => {
+    try {
+        const options = {
+            'method': 'GET',
+            'url': `${APIDatabaseIP}users`,
+        };
+        const response = await request(options);
+        res.json({ message: 'SUCCESS', responses: response.body });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Une erreur est survenue lors de la récupération du nombre d\'utilisateurs.' });
+    }
 });
+
+api.post('/api/users/information-user', async (req, res) => {
+    const formData = req.body;
+
+    try {
+        const options = {
+            'method': 'GET',
+            'url': `${APIDatabaseIP}?users=${formData.id}`,
+        };
+        const response = await request(options);
+        res.json({ message: 'SUCCESS', data: response.body });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Une erreur est survenue lors de la récupération des informations de l\'utilisateur.' });
+    }
+})
+
 
 function postDataHttps(options, postData) {
     return new Promise((resolve, reject) => {
