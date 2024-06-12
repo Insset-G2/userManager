@@ -1,9 +1,5 @@
 {
   "type": "service_account",
-  "project_id": "ccm-2024-m1",
-  "private_key_id": "fd6a4f97dac2cb343efe1adb77e6a30c74aefe52",
-  "client_email": "usermanagerdocker@ccm-2024-m1.iam.gserviceaccount.com",
-  "client_id": "116929619473406512845",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
